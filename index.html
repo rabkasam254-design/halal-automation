@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalalAI — AI-автоматизация для халаль-бизнеса</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e2e2e2;
+            line-height: 1.6;
+        }
+        /* Islamic pattern header */
+        .pattern-bg {
+            position: fixed; top: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(22, 163, 74, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        /* Header */
+        header {
+            padding: 30px 0 20px;
+            border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+        }
+        .header-content {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 24px; font-weight: 800; color: #22c55e;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .logo span { color: #fff; font-weight: 400; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a {
+            color: #a0a0a0; text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #22c55e; }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            color: #22c55e;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 52px; font-weight: 800; line-height: 1.15;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px; color: #888;
+            max-width: 640px; margin: 0 auto 40px;
+        }
+        .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 36px; border-radius: 12px; font-size: 16px; font-weight: 600;
+            text-decoration: none; display: inline-block; transition: all 0.2s;
+            cursor: pointer; border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.3); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .features h2 {
+            font-size: 36px; font-weight: 700; color: #fff;
+            margin-bottom: 16px;
+        }
+        .features > p {
+            color: #888; font-size: 16px; max-width: 500px; margin: 0 auto 60px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .feature-card:hover {
+            border-color: rgba(34, 197, 94, 0.2);
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            width: 48px; height: 48px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 20px;
+        }
+        .feature-card h3 { color: #fff; font-size: 18px; margin-bottom: 12px; }
+        .feature-card p { color: #888; font-size: 14px; line-height: 1.7; }
+
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
+        }
+        .pricing h2 {
+            text-align: center;
+            font-size: 36px; font-weight: 700; color: #fff;
+            margin-bottom: 16px;
+        }
+        .pricing > p {
+            text-align: center;
+            color: #888; font-size: 16px; max-width: 500px; margin: 0 auto 60px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 40px 32px;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .pricing-card:hover {
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+        .pricing-card.featured {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.05);
+            transform: scale(1.05);
+        }
+        .pricing-card.featured .popular-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff; font-size: 12px; font-weight: 600;
+            padding: 6px 16px; border-radius: 100px;
+        }
+        .pricing-card h3 { color: #fff; font-size: 20px; margin-bottom: 8px; }
+        .pricing-card .price {
+            font-size: 42px; font-weight: 800; color: #22c55e;
+            margin-bottom: 4px;
+        }
+        .pricing-card .price span {
+            font-size: 16px; font-weight: 400; color: #888;
+        }
+        .pricing-card .period {
+            color: #666; font-size: 14px; margin-bottom: 24px;
+        }
+        .pricing-card ul {
+            list-style: none; margin-bottom: 32px;
+        }
+        .pricing-card ul li {
+            padding: 8px 0; font-size: 14px; color: #a0a0a0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .pricing-card ul li::before {
+            content: "✓"; color: #22c55e; font-weight: 700;
+        }
+        .pricing-card .btn {
+            width: 100%; text-align: center;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+        }
+        .faq h2 {
+            text-align: center;
+            font-size: 36px; font-weight: 700; color: #fff;
+            margin-bottom: 48px;
+        }
+        .faq-grid { max-width: 700px; margin: 0 auto; }
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 24px 0;
+        }
+        .faq-item h3 {
+            color: #e2e2e2; font-size: 16px; font-weight: 500;
+            cursor: pointer; margin-bottom: 8px;
+        }
+        .faq-item p {
+            color: #888; font-size: 14px; line-height: 1.7;
+            display: none;
+        }
+        .faq-item.active p { display: block; }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+        }
+        footer p { color: #666; font-size: 13px; }
+        footer .halal-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 12px;
+            background: rgba(34, 197, 94, 0.08);
+            padding: 6px 16px; border-radius: 100px;
+            font-size: 12px; color: #22c55e;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: none; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="pattern-bg"></div>
+
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">🤖 HalalAI <span>Automation</span></div>
+            <div class="nav-links">
+                <a href="#features">Возможности</a>
+                <a href="#pricing">Цены</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://t.me/halalai_bot" class="btn btn-primary" style="padding: 10px 24px; font-size: 14px;">Связаться</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">✓ Халяль. AI. Автоматизация.</div>
+        <h1>AI-автоматизация для <span>халяль-бизнеса</span></h1>
+        <p>Telegram-боты, AI-контент, CRM и учёт — всё, чтобы ваш халаль-бизнес работал 24/7 без лишних затрат.</p>
+        <div class="hero-actions">
+            <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
+            <a href="https://t.me/halalai_bot" class="btn btn-secondary">Telegram бот</a>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="container">
+        <h2>Что мы автоматизируем</h2>
+        <p>Три ключевых направления для роста вашего бизнеса</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Telegram-боты</h3>
+                <p>Приём заказов, консультации, каталог товаров. Бот работает 24/7, отвечает на вопросы клиентов, принимает заказы.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>AI-контент</h3>
+                <p>Автоматическая генерация постов для соцсетей, карточек товаров, описаний. Экономия часов каждый день.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>CRM + Учёт</h3>
+                <p>Учёт клиентов, заказов, склада. Автоматические отчёты и аналитика. Всё в Telegram.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pricing" id="pricing">
+    <div class="container">
+        <h2>Тарифы</h2>
+        <p>Прозрачные цены. Никаких скрытых платежей. Первая неделя бесплатно.</p>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Базовый</h3>
+                <div class="price">$500 <span>/мес</span></div>
+                <div class="period">Для старта</div>
+                <ul>
+                    <li>Telegram-бот для заказов</li>
+                    <li>База знаний FAQ (50+ вопросов)</li>
+                    <li>Автоответы на частые вопросы</li>
+                    <li>Базовая аналитика</li>
+                </ul>
+                <a href="https://t.me/halalai_bot" class="btn btn-secondary">Начать</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="popular-badge">Популярный</div>
+                <h3>Стандарт</h3>
+                <div class="price">$1,500 <span>/мес</span></div>
+                <div class="period">Для роста</div>
+                <ul>
+                    <li>Всё из Базового +</li>
+                    <li>Автоматизация учёта товаров</li>
+                    <li>Интеграция с оплатой</li>
+                    <li>AI-генерация контента</li>
+                    <li>Еженедельные отчёты</li>
+                </ul>
+                <a href="https://t.me/halalai_bot" class="btn btn-primary">Начать</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Бизнес</h3>
+                <div class="price">$3,000 <span>/мес</span></div>
+                <div class="period">Для масштаба</div>
+                <ul>
+                    <li>Всё из Стандарта +</li>
+                    <li>Полная CRM-система</li>
+                    <li>Мультиканал (TG + Instagram + VK)</li>
+                    <li>Прогнозирование спроса</li>
+                    <li>Персональный менеджер</li>
+                </ul>
+                <a href="https://t.me/halalai_bot" class="btn btn-secondary">Начать</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq" id="faq">
+    <div class="container">
+        <h2>Частые вопросы</h2>
+        <div class="faq-grid">
+            <div class="faq-item active">
+                <h3>Это халяль?</h3>
+                <p>Да. Мы не используем процентные схемы (риба), не работаем с харам-продуктами. Все операции прозрачны и этичны.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Как быстро запустим?</h3>
+                <p>Базовый тариф — 3 дня. Стандарт — 5-7 дней. Бизнес — до 14 дней.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Нужно ли устанавливать программы?</h3>
+                <p>Нет. Всё работает через Telegram. Никаких VPN, серверов, сложных настроек.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Какие языки поддерживаете?</h3>
+                <p>Русский, узбекский, казахский, английский. Любой язык по запросу.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Можно попробовать бесплатно?</h3>
+                <p>Да. Первая неделя любого тарифа — бесплатно. Оплата только если вас всё устраивает.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="halal-badge">☪ Работаем по принципам халяль</div>
+        <p style="margin-top: 16px;">© 2026 HalalAI Automation. Все права защищены.</p>
+        <p style="margin-top: 4px;">По вопросам сотрудничества: @halalai_bot</p>
+    </div>
+</footer>
+
+<script>
+    document.querySelectorAll('.faq-item h3').forEach(item => {
+        item.addEventListener('click', () => {
+            item.parentElement.classList.toggle('active');
+        });
+    });
+</script>
+</body>
+</html>
